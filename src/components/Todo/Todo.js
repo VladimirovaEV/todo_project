@@ -4,49 +4,22 @@ import Footer from '../Footer/Footer';
 import InputItem from '../InputItem/InputItem';
 import style from './Todo.module.css';
 import 'fontsource-roboto';
+import classnames from 'classnames';
+import emptylist from '../../img/empty-list.svg';
 
 const Todo = () => {
 	const initialState = {
-		items: [
-		{
-		value: 'Компоненты-классы',
-		isDone: true,
-		id: 1
-	},
-	{
-		value: 'State',
+		items: [],
+		count: 0,
 		isDone: false,
-		id: 2
-	},
-	{
-		value: 'Обработка событий',
-		isDone: false,
-		id: 3
-	}
-		],
-		count: 3,
-		hasError: false
+		sortTask: 'Список задач',
+		id: 0,
 	};
 
 	const [items, setItems] = useState (initialState.items);
    const [count, setCount] = useState (initialState.count);
-   const [hasError, setHasError] = useState (initialState.hasError);
+   const [sortTask, setSort] = useState (initialState.sortTask);
 
-	const onClickDone = id => {
-		const newItemList = items.map(item => {
-			const newItem = {...item};
-			if (item.id === id) {
-				newItem.isDone = !item.isDone;
-			}
-			return newItem;
-		});
-		setItems(newItemList);
-	};
-	const onClickDelete = id => 	{
-		const newDelItemList = items.filter(item => item.id !== id);
-		setItems(newDelItemList);
-		setCount((count) => count - 1);
-	};
 const onClickAdd = value => {
 	if (value !== '') {
 		setItems ([
@@ -58,18 +31,75 @@ const onClickAdd = value => {
 			}]
 		);
 		setCount((count) => count + 1);
-} 
-else {
-	setHasError (true);
 }
 };
 
-		return ( 
+	const onClickDone = id => {
+		const newItemList = items.map(item => {
+			const newItem = {...item};
+			if (item.id === id) {
+				newItem.isDone = !item.isDone;
+			}
+			return newItem;
+		});
+		setItems(newItemList);
+
+	};
+	const onClickDelete = id => {
+		const newDelItemList = items.filter(item => item.id !== id);
+		setItems(newDelItemList);
+	};
+
+
+const renderIsDone = (status) => {
+	const newItems = items.filter(item => item.isDone === status);
+	return newItems.length;
+}
+
+const onClickSort = (sorting) => setSort(sorting);
+let sortingTask;
+switch (sortTask) {
+	case 'Завершенные':
+	sortingTask = items.filter((item) => item.isDone);
+	break;
+	case 'Незавершенные':
+	sortingTask = items.filter((item) => !item.isDone);
+	break;
+	case 'Список задач':
+	sortingTask = items;
+	break;
+	default:
+	sortingTask = items;
+}
+
+		return (
 	<div className={style.wrap}>
-	<h1 className={style.title}> План обучения на неделю </h1>
-	<InputItem onClickAdd={onClickAdd} hasError={hasError} />
-	<ItemList items={items} onClickDone={onClickDone} onClickDelete={onClickDelete} />
-	<Footer count={count} />
+	<div className={style.todo}>
+	<button
+	className={classnames({
+		[style.buttonBig]:true,
+		[style.buttonBigAct]:sortingTask ==='Список задач',
+	})}
+		onClick={() => onClickSort('Список задач')}
+	>
+	<span className={style.title}> Список задач - {items.length}</span>
+	</button>
+	</div>
+	<InputItem items={items} onClickAdd={onClickAdd} />
+	<div>
+	{items.length === 0 ? (
+		<div className={style.error}>
+		<img src={emptylist} alt={"empty-list"} />
+		<div className={style.error_message}>
+                    Пока не добавлено ни одной задачи!
+            </div>
+            </div>
+            ) : (
+            <ItemList items={items} onClickDone={onClickDone} onClickDelete={onClickDelete}
+	sort={sortingTask} sortValue={sortTask}/>
+            )}
+	</div>
+	<Footer renderIsDone={renderIsDone} onClickSort={onClickSort} sorting={sortTask}/> 
 	</div>);
 };
 

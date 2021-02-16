@@ -9,13 +9,17 @@ class Item extends React.Component {
 
   render () {
     const { value, isDone, onClickDone, id, onClickDelete } = this.props;
-    return (<span className={
-  classnames({
+    return (
+      <span className={
+    classnames({
     [styles.item]: true,
     [styles.done]: isDone
   })
 }>
-<Checkbox
+<Checkbox className={classnames({
+  [styles.checkbox]:true,
+  [styles.checkboxCheck]:isDone
+})}
         defaultChecked
         color="primary"
         inputProps={{ 'aria-label': 'secondary checkbox' }}

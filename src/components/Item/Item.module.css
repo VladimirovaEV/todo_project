@@ -1,6 +1,7 @@
 .item {
   color: #333;
   font: 800 18px/20px Roboto; 
+  font-style: oblique;
 }
 .done {
   color: #c4c4c4;
@@ -8,4 +9,8 @@
 }
 .icon {
   left: 80%;
+}
+.checkboxCheck {
+  pointer-events: none;
+  opacity: 0.5;
 }

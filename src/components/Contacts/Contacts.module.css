@@ -4,5 +4,57 @@
   font-weight: 900;
   text-align: center;
   color: #3f4c6b;
-
+}
+.p {
+  text-align: center;
+}
+.img {
+  height: 100px;
+  width: 100px;
+}
+.email {
+  font-family: Roboto;
+  position: relative;
+  left: 15%;
+  text-decoration: none;
+  color: #4096ee;
+  bottom: 25px;
+}
+.email:hover {
+  color: #3f4c6b;
+  text-decoration: underline;
+}
+.email:visited {
+  color: #4096ee;
+}
+.mailIcon {
+  position: relative;
+  left: 8%;
+}
+.locationIcon {
+  position: relative;
+  left: 8%;
+}
+.location {
+  font-family: Roboto;
+  position: relative;
+  left: 15%;
+  bottom: 25px;
+  color: #4096ee;
+}
+.facebookIcon {
+  position: relative;
+  left: 8%;
+}
+.facebook {
+  position: relative;
+  font-family: Roboto;
+  left: 15%;
+  text-decoration: none;
+  color: #4096ee;
+  bottom: 25px;
+}
+.facebook:hover {
+  color: #3f4c6b;
+  text-decoration: underline;
 }
